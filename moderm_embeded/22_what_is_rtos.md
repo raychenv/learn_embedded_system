@@ -77,6 +77,7 @@ https://www.ti.com/tool/EK-TM4C123GXL
 ![TI arm exception model](./images/arm_exception_model.png)
 
 现在来个小技巧：当`SysTick_Handler`再次命中时，把堆栈上的返回地址（PC项）改为`main_blinky1()`的地址（比如0x7C6）。然后单步执行中断返回指令，你会发现跳转到了`main_blinky1()`，绿色LED开始闪烁。示意图如下。这说明通过中断和堆栈操作可以在后台循环间切换。但这种方法**不合法**，在更复杂的程序中**不可靠**，后面会解释原因。
+
 ![simple switch](./images/switch_thread_simple.drawio.svg)
 
 上述操作的验证了：  
