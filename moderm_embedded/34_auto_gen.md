@@ -1,6 +1,6 @@
-# 34 事件驱动编程用于实时嵌入式系统
+# 嵌入式RTOS-事件驱动编程
 
-这一课，Miro Samek 继续讲 event-driven programming，但重点已经从上一课的桌面 GUI 转到 real-time embedded systems。上一课通过 Win32 GUI 解释了事件循环、消息队列、Run-to-Completion 和 inversion of control，但这些概念如果只停留在桌面窗口程序里，还不容易让人直觉地理解它们为什么对嵌入式同样重要。
+34课，Miro Samek 继续讲 event-driven programming，但重点已经从33课的桌面 GUI 转到 real-time embedded systems。33课通过 Win32 GUI 解释了事件循环、消息队列、Run-to-Completion 和 inversion of control，但这些概念如果只停留在桌面窗口程序里，还不容易让人直觉地理解它们为什么对嵌入式同样重要。
 
 所以这一课的切入方式很务实：先回到嵌入式开发者最熟悉的传统 RTOS 线程模型，从 superloop 和 blocking thread 出发，再一点点说明这些做法会带来什么问题，以及为什么 event-driven 的 active object 模型能更系统地解决这些问题。
 
@@ -617,4 +617,4 @@ int main() {
 6. 把顺序线程改造成 active object 时，原来的 blocking wait 需要被重新表达为显式事件，例如 timeout event。
 7. 事件驱动代码天然更容易组合，因此可以把原本为响应性而拆开的多个线程重新合并，并进一步消除共享状态和 mutex。
 
-如果说第 33 课建立了事件驱动的基本直觉，那么第 34 课则第一次把这种直觉真正变成了嵌入式并发设计方法。它让你看到，active object 并不是对 RTOS 线程的小修小补，而是另一种更适合 reactive system 的组织方式。后续课程如果继续沿着这条线展开，你会发现状态机、事件队列和 active object 会逐渐组合成一套非常完整的方法论。
+如果说第 33 课建立了事件驱动的基本直觉，那么第 34 课则第一次把这种直觉真正变成了嵌入式并发设计方法。它让我们看到，active object 并不是对 RTOS 线程的小修小补，而是另一种更适合 reactive system 的组织方式。后续课程继续沿着这条线展开，状态机、事件队列和 active object 会逐渐组合成一套非常完整的方法论。
