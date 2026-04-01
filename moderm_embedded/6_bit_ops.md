@@ -96,7 +96,7 @@ GPIO_PORTF_DATA_R |= LED_RED;
 
 这条语句等价于：
 
-$$reg \leftarrow reg \;|\; mask$$
+$$\mathrm{reg} \leftarrow \mathrm{reg} \;\mathrm{OR}\; \mathrm{mask}$$
 
 - `mask` 中为 1 的位被置 1。
 - 其他位保持原值。
@@ -109,7 +109,7 @@ GPIO_PORTF_DATA_R &= ~LED_RED;
 
 等价于：
 
-$$reg \leftarrow reg \;&\; \sim mask$$
+$$\mathrm{reg} \leftarrow \mathrm{reg} \;\mathrm{AND}\; \sim\mathrm{mask}$$
 
 - `mask` 中为 1 的位被清 0。
 - 其他位保持原值。

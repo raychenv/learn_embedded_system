@@ -18,7 +18,7 @@ unsigned int data[10];
 
 **关键原理**：数组元素 `data[i]` 的内存地址可以通过以下公式计算：
 
-$$\text{address}(data[i]) = \text{address}(data[0]) + i \times \text{sizeof}(\text{element\_type})$$
+$$\mathrm{addr}(data_i) = \mathrm{addr}(data_0) + i \cdot \mathrm{sizeof}(\mathrm{elem})$$
 
 ## 指针算术的硬件实现
 
@@ -230,7 +230,7 @@ unsigned int matrix[3][4];  // 3行4列的矩阵
 
 访问 `matrix[i][j]` 的实际地址：
 
-$$\text{address} = \text{base} + (i \times \text{cols} + j) \times \text{sizeof(element)}$$
+$$\mathrm{addr} = \mathrm{base} + (i \cdot \mathrm{cols} + j) \cdot \mathrm{sizeof}(\mathrm{elem})$$
 
 编译器能够根据数组声明信息自动计算这个公式。例如，访问`matrix[2][3]`:
 
