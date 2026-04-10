@@ -333,6 +333,77 @@ Samek 同样非常坦率地指出了其缺点。
 
 结果反而又慢慢滑回了 spaghetti code，而这正是使用 state machine 本来要避免的东西。
 
+## lesson 38 关键代码（节选）
+
+下面几段代码对应本课实现层面的三个关键点：
+
+1. 用二维 `const` 表保存 `state x signal` 映射。
+2. 通过 handler 返回 `Status`，由统一 `dispatch()` 触发 entry/exit。
+3. 通过保留信号把 `ENTRY` / `EXIT` 也纳入同一套事件分发机制。
+
+代码来源：`lesson-38/tm4c123-uc_ao-keil`。
+
+### 1. 状态表只保存 action handler（`main.c`）
+
+```c
+typedef Status (*TimeBombAction)(TimeBomb * const me, Event const * const e);
+
+static TimeBombAction const TimeBomb_table[MAX_STATE][MAX_SIG] = {
+			   /*   INIT            | ENTRY                      | EXIT                      | PRESSED                      | RELEASED        | TIMEOUT */
+/* wait4button */ { &TimeBomb_init,   &TimeBomb_wait4button_ENTRY, &TimeBomb_wait4button_EXIT, &TimeBomb_wait4button_PRESSED, &TimeBomb_ignore, &TimeBomb_ignore },
+/* blink       */ { &TimeBomb_ignore, &TimeBomb_blink_ENTRY,       &TimeBomb_blink_EXIT,       &TimeBomb_ignore,              &TimeBomb_ignore, &TimeBomb_blink_TIMEOUT },
+/* pause       */ { &TimeBomb_ignore, &TimeBomb_pause_ENTRY,       &TimeBomb_ignore,           &TimeBomb_ignore,              &TimeBomb_ignore, &TimeBomb_pause_TIMEOUT },
+/* boom        */ { &TimeBomb_ignore, &TimeBomb_boom_ENTRY,        &TimeBomb_ignore,           &TimeBomb_ignore,              &TimeBomb_ignore, &TimeBomb_ignore }
+};
+```
+
+这里的表项没有硬塞 next-state/guard 结构体，而是只放函数指针，guard 与状态切换由 handler 内部处理，代码体量更可控。
+
+### 2. `dispatch()` 根据 `Status` 统一调度 entry/exit（`main.c`）
+
+```c
+static void TimeBomb_dispatch(TimeBomb * const me, Event const * const e) {
+	Status stat;
+	int prev_state = me->state; /* save for later */
+
+	Q_ASSERT((me->state < MAX_STATE) && (e->sig < MAX_SIG));
+	stat = (*TimeBomb_table[me->state][e->sig])(me, e);
+
+	if (stat == TRAN_STATUS) { /* transition taken? */
+		Q_ASSERT(me->state < MAX_STATE);
+		(*TimeBomb_table[prev_state][EXIT_SIG])(me, (Event *)0);
+		(*TimeBomb_table[me->state][ENTRY_SIG])(me, (Event *)0);
+	}
+	else if (stat == INIT_STATUS) { /* initial transition? */
+		(*TimeBomb_table[me->state][ENTRY_SIG])(me, (Event *)0);
+	}
+}
+```
+
+这正是本课最核心的“框架化”动作：每个 handler 不必自己调用 entry/exit，只需返回状态码即可。
+
+### 3. `ENTRY_SIG` / `EXIT_SIG` 作为保留信号（`uc_ao.h`、`bsp.h`）
+
+```c
+/* uc_ao.h */
+enum ReservedSignals {
+	INIT_SIG,
+	ENTRY_SIG,
+	EXIT_SIG,
+	USER_SIG
+};
+
+/* bsp.h */
+enum EventSignals {
+	BUTTON_PRESSED_SIG = USER_SIG,
+	BUTTON_RELEASED_SIG,
+	TIMEOUT_SIG,
+	MAX_SIG
+};
+```
+
+保留信号和业务信号共用同一个 `sig` 空间，因此二维表的列索引可统一处理，这也是 `MAX_SIG` 必须覆盖保留信号的原因。
+
 ## 总结
 
 38 课的核心，是引入 state table 这种典型的 data-driven 状态机实现方式，并在其基础上进一步加入 entry/exit action。
