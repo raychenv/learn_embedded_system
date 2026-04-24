@@ -11,6 +11,9 @@
 3. 理解为什么在嵌入式里 `volatile` 是必须掌握的关键字。
 4. 引入设备厂商头文件，让寄存器访问从“记地址”转为“读名字”。
 
+lesson 5 工程可参考：
+https://github.com/QuantumLeaps/modern-embedded-programming-course/tree/main/lesson-5
+
 ## Lesson-05 源码变化（TM4C）
 
 lesson-05 的 TM4C 工程已经从裸地址切换到符号名：

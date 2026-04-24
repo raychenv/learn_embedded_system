@@ -6,6 +6,9 @@
 
 本课深入讲解ARM体系结构下的函数传参、返回值处理、栈帧管理和调用约定。这对于调试、性能优化和理解异常处理至关重要。
 
+lesson 8 工程可参考：
+https://github.com/QuantumLeaps/modern-embedded-programming-course/tree/main/lesson-08
+
 ## 函数调用的高层观点
 
 从C代码角度：

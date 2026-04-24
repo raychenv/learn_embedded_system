@@ -12,9 +12,12 @@
 
 这套思路会贯穿后续所有章节。
 
+lesson 4 工程可参考：
+https://github.com/QuantumLeaps/modern-embedded-programming-course/tree/main/lesson-04
+
 ## 地址空间全景：代码、RAM、外设
 
-以 Cortex-M 微控制器为例，程序看到的是统一的 32 位地址空间（$2^{32}$ 字节）。
+以 Cortex-M 微控制器为例，程序看到的是统一的 32 位地址空间（2^32 字节）。
 
 典型分区（概念级）如下：
 
@@ -30,7 +33,7 @@
 
 所以“控制 LED”在机器层面就是：
 
-$$\text{store value} \rightarrow \text{specific peripheral address}$$
+store value -> specific peripheral address
 
 ## Lesson-04 代码主线（TM4C）
 

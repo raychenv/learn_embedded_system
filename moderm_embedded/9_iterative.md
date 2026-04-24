@@ -6,11 +6,14 @@
 
 本课展示如何使用递归（以阶乘函数为例），讲解栈帧如何嵌套，以及如何将项目分解为多个源文件。这为后续课程（特别是第13课）中讨论的`.data`初始化提供了基础。
 
+lesson 9 工程可参考：
+https://github.com/QuantumLeaps/modern-embedded-programming-course/tree/main/lesson-09
+
 ## 递归函数的基本概念
 
 递归函数是指在其定义中调用自己的函数。最经典的例子是**阶乘**（Factorial）：
 
-$$n! = \begin{cases} 1 & \text{if } n = 0 \\ n \times (n-1)! & \text{if } n > 0 \end{cases}$$
+n! = 1 (if n = 0); n! = n * (n - 1)! (if n > 0)
 
 C语言实现：
 
@@ -388,7 +391,7 @@ unsigned fact_iter(unsigned n) {
 | 特性 | 递归 | 迭代 |
 |------|------|------|
 | 代码可读性 | 高（符合数学定义） | 中等 |
-| 栈使用 | $O(n)$ | $O(1)$ |
+| 栈使用 | O(n) | O(1) |
 | 执行效率 | 低（函数调用开销） | 高 |
 | 调试难度 | 高（栈帧嵌套） | 低 |
 | 实现复杂性 | 低 | 低 |

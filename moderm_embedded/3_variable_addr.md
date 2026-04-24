@@ -10,6 +10,9 @@
 
 理解这一课，后面访问寄存器地址（第 4 课）就会非常自然。
 
+lesson 3 工程可参考：
+https://github.com/QuantumLeaps/modern-embedded-programming-course/tree/main/lesson-03
+
 ## Lesson-03 源码锚点
 
 lesson-03 的核心示例（简化）如下：

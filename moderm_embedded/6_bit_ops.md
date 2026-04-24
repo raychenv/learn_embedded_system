@@ -14,6 +14,9 @@
 1. 理解 C 位运算符在机器层的真实行为。
 2. 把这些运算应用到多路 LED 控制，避免破坏无关位。
 
+lesson 6 工程可参考：
+https://github.com/QuantumLeaps/modern-embedded-programming-course/tree/main/lesson-06
+
 ## Lesson-06 代码锚点
 
 TM4C 版本核心片段：
@@ -96,7 +99,7 @@ GPIO_PORTF_DATA_R |= LED_RED;
 
 这条语句等价于：
 
-$$\mathrm{reg} \leftarrow \mathrm{reg} \;\mathrm{OR}\; \mathrm{mask}$$
+reg <- reg OR mask
 
 - `mask` 中为 1 的位被置 1。
 - 其他位保持原值。
@@ -109,7 +112,7 @@ GPIO_PORTF_DATA_R &= ~LED_RED;
 
 等价于：
 
-$$\mathrm{reg} \leftarrow \mathrm{reg} \;\mathrm{AND}\; \sim\mathrm{mask}$$
+reg <- reg AND (~mask)
 
 - `mask` 中为 1 的位被清 0。
 - 其他位保持原值。
@@ -158,7 +161,7 @@ z = y >> 3;
 对无符号数，右移通常是逻辑右移（高位补 0）；
 对有符号数，很多编译器/架构会执行算术右移（高位补符号位），以保持符号。
 
-在二补码下，这能让“右移约等于除以 $2^n$”在负数上也维持直觉上的行为。但严格标准语义与实现相关，跨平台代码应谨慎依赖。
+在二补码下，这能让“右移约等于除以 2^n”在负数上也维持直觉上的行为。但严格标准语义与实现相关，跨平台代码应谨慎依赖。
 
 ## 位运算到汇编：一条指令改 32 位
 

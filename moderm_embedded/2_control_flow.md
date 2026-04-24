@@ -12,6 +12,9 @@
 
 这也是后续状态机、调度、实时系统的第一块基石。
 
+lesson 2 工程可参考：
+https://github.com/QuantumLeaps/modern-embedded-programming-course/tree/main/lesson-02
+
 ## Lesson-02 源码主线
 
 lesson-02 的核心代码非常经典：

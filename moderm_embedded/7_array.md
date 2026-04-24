@@ -6,6 +6,9 @@
 
 本课程重点讲解此工作原理，深入剖析ARM汇编代码如何实现数组索引寻址，以及这种语法糖背后的硬件机制。
 
+lesson 7 工程可参考：
+https://github.com/QuantumLeaps/modern-embedded-programming-course/tree/main/lesson-07
+
 ## 数组的本质：内存顺序访问
 
 在C语言中，**数组本质上是一块连续的内存区域**。当我们声明：
@@ -18,7 +21,7 @@ unsigned int data[10];
 
 **关键原理**：数组元素 `data[i]` 的内存地址可以通过以下公式计算：
 
-$$\mathrm{addr}(data_i) = \mathrm{addr}(data_0) + i \cdot \mathrm{sizeof}(\mathrm{elem})$$
+addr(data_i) = addr(data_0) + i * sizeof(elem)
 
 ## 指针算术的硬件实现
 
@@ -230,7 +233,7 @@ unsigned int matrix[3][4];  // 3行4列的矩阵
 
 访问 `matrix[i][j]` 的实际地址：
 
-$$\mathrm{addr} = \mathrm{base} + (i \cdot \mathrm{cols} + j) \cdot \mathrm{sizeof}(\mathrm{elem})$$
+addr = base + (i * cols + j) * sizeof(elem)
 
 编译器能够根据数组声明信息自动计算这个公式。例如，访问`matrix[2][3]`:
 
